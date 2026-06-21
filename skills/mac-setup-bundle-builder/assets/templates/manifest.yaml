@@ -1,0 +1,83 @@
+generated_on: "YYYY-MM-DD"
+source_machine:
+  macos: ""
+  arch: ""
+target_machine:
+  expected: ""
+  arch: ""
+  package_manager_prefixes: []
+
+shell:
+  detected: []
+  login_shell: ""
+  framework: ""
+  theme: ""
+  plugins: []
+  files: {}
+  secrets: []
+
+package_managers:
+  system: []
+  language: []
+  app_store: []
+  other: []
+  notes: []
+
+system_files:
+  hosts: {}
+  ssh: {}
+  macos_defaults: {}
+  app_settings: {}
+  finder_favorites: {}
+  live_progress:
+    script: <script_dir>/bootstrap-progress.sh
+    live_log: <bundle_dir>/reports/live-bootstrap-status.log
+    additional_changes_log: <bundle_dir>/reports/additional-changes.log
+  verification:
+    script: <script_dir>/bootstrap-check.sh
+  html_report:
+    script: <script_dir>/generate-bootstrap-report.sh
+
+apps:
+  install_with_package_managers: []
+  install_with_app_stores: []
+  installed_now_vendor_or_manual: []
+  manual_lookup_or_login_required: []
+
+containers:
+  engines: []
+  image_inventories: []
+  restore_scripts: []
+  private_registry_notes: []
+
+virtualization:
+  managers: []
+  labs: []
+  setup_scripts: []
+  provider_notes: []
+
+developer_tools:
+  editors: []
+  ides: []
+  editor_extensions: []
+  editor_settings: []
+  coding_assistants: []
+  local_ai: []
+  model_runtimes: []
+  launchers: []
+  unclassified_configs: []
+
+languages:
+  runtimes: []
+  version_managers: []
+  package_managers: []
+  global_packages: []
+
+services:
+  local: []
+  launch_agents: []
+  start_stop_scripts: []
+
+shortcuts: []
+repos: []
+post_setup_checks: []

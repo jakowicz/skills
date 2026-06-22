@@ -63,6 +63,10 @@ Example with explicit output paths:
 
 ```text
 Use the mac-setup-bundle-builder skill and create the bundle in ./mac-bootstrap with helper scripts in ./scripts.
+
+Put the machine-readable setup bundle in ./mac-bootstrap. This should include PROMPT.md, manifest.yaml, setup-order.md, package manager inventories, app/settings docs, dotfiles, editor extension inventories, VM/container inventories, private transfer placeholders, live-progress report paths, verification expectations, and recommendations.
+
+Put executable helper scripts in ./scripts. This should include setup/check/report scripts such as bootstrap-progress.sh, bootstrap-check.sh, generate-bootstrap-report.sh, restore-app-settings.sh, setup-editor-tooling.sh, setup-local-tools.sh, and any tool-specific install/restore scripts discovered from this machine.
 ```
 
 If your agent does not automatically detect the skill, name it explicitly:
@@ -70,6 +74,52 @@ If your agent does not automatically detect the skill, name it explicitly:
 ```text
 Use the installed skill named mac-setup-bundle-builder.
 ```
+
+#### Moving the bundle to a new Mac
+
+The generated bundle is meant to be carried to the new Mac and given to an AI setup agent there.
+
+Common transfer options:
+
+```sh
+# If the bundle is safe to publish, push the repo and clone it on the new Mac.
+git clone git@github.com:your-user/your-setup-bundle.git
+
+# For a private local transfer, archive the repo.
+tar -czf mac-setup-bundle.tgz ./mac-bootstrap ./scripts
+
+# Copy directly over SSH.
+rsync -av ./mac-bootstrap ./scripts user@new-mac.local:~/setup-bundle/
+
+# Or copy with AirDrop, an encrypted external drive, or a private cloud folder.
+```
+
+If the bundle uses a `private/` directory for SSH keys, app plist files, GPG material, license files, or other sensitive local state, those files should usually be gitignored. That means they will not be present when someone clones the Git repo on the new Mac.
+
+Transfer private files separately only after reviewing them:
+
+```sh
+# Example: copy private files over SSH without committing them to git.
+rsync -av ./mac-bootstrap/private/ user@new-mac.local:~/setup-bundle/mac-bootstrap/private/
+
+# Example: create an encrypted archive for manual transfer.
+tar -czf private-transfer.tgz ./mac-bootstrap/private
+gpg -c private-transfer.tgz
+```
+
+Do not publish private keys, tokens, browser sessions, app databases, account caches, or cloud credentials. Prefer password managers, manual sign-in, and documented placeholders where possible.
+
+#### Configuring the new Mac
+
+On the new Mac:
+
+1. Copy or clone the generated bundle.
+2. Copy any reviewed private files separately if the setup requires them.
+3. Open the generated `PROMPT.md`.
+4. Ask your AI setup agent to follow that prompt from inside the copied repository.
+5. Watch the live progress log named in the manifest while long installs run.
+6. Run the generated verification script.
+7. Open the generated final report and review failures, fallback installs, missing private files, and manual login/licensing steps.
 
 ## Discovery
 

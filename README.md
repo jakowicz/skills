@@ -59,12 +59,6 @@ Example planning-only prompt:
 Use the mac-setup-bundle-builder skill to inspect this Mac and tell me what setup bundle files you would create. Do not write files yet.
 ```
 
-If your agent does not automatically detect the skill, name it explicitly:
-
-```text
-Use the installed skill named mac-setup-bundle-builder.
-```
-
 #### Moving the bundle to a new Mac
 
 The generated bundle is meant to be carried to the new Mac and given to an AI setup agent there.

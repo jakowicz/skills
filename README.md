@@ -69,6 +69,12 @@ Put the machine-readable setup bundle in ./mac-bootstrap. This should include PR
 Put executable helper scripts in ./scripts. This should include setup/check/report scripts such as bootstrap-progress.sh, bootstrap-check.sh, generate-bootstrap-report.sh, restore-app-settings.sh, setup-editor-tooling.sh, setup-local-tools.sh, and any tool-specific install/restore scripts discovered from this machine.
 ```
 
+The two-directory layout is a convention, not a requirement. `./mac-bootstrap` keeps the declarative bundle files together, while `./scripts` keeps executable automation beside the bundle at the repo root. This makes commands such as `scripts/bootstrap-check.sh` easy to run from the copied repository root. If you prefer a single self-contained folder, ask the agent to put helper scripts inside the bundle instead:
+
+```text
+Use the mac-setup-bundle-builder skill and create a self-contained bundle in ./mac-bootstrap. Put helper scripts in ./mac-bootstrap/scripts and make every generated path match that layout.
+```
+
 If your agent does not automatically detect the skill, name it explicitly:
 
 ```text
@@ -115,11 +121,18 @@ On the new Mac:
 
 1. Copy or clone the generated bundle.
 2. Copy any reviewed private files separately if the setup requires them.
-3. Open the generated `PROMPT.md`.
-4. Ask your AI setup agent to follow that prompt from inside the copied repository.
-5. Watch the live progress log named in the manifest while long installs run.
-6. Run the generated verification script.
-7. Open the generated final report and review failures, fallback installs, missing private files, and manual login/licensing steps.
+3. Open your AI coding agent with the copied repository as the workspace. For example, open the folder that contains `mac-bootstrap/` and `scripts/`.
+4. Open the generated `mac-bootstrap/PROMPT.md`.
+5. Copy the full contents of `PROMPT.md` and paste it as the first message to the AI setup agent. If your agent supports file references, you can instead send a short message such as:
+
+   ```text
+   Read mac-bootstrap/PROMPT.md and follow it to configure this new Mac. Use this copied repository as the setup workspace.
+   ```
+
+   If your bundle used a different directory name, replace `mac-bootstrap/PROMPT.md` with the generated prompt path.
+6. Watch the live progress log named in the manifest while long installs run.
+7. Run the generated verification script.
+8. Open the generated final report and review failures, fallback installs, missing private files, and manual login/licensing steps.
 
 ## Discovery
 

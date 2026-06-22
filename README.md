@@ -130,9 +130,45 @@ On the new Mac:
    ```
 
    If your bundle used a different directory name, replace `mac-bootstrap/PROMPT.md` with the generated prompt path.
-6. Watch the live progress log named in the manifest while long installs run.
-7. Run the generated verification script.
-8. Open the generated final report and review failures, fallback installs, missing private files, and manual login/licensing steps.
+6. Watch the live progress log named in the manifest while long installs run. The default path is usually:
+
+   ```sh
+   tail -f mac-bootstrap/reports/live-bootstrap-status.log
+   ```
+
+   If the generated manifest uses a different path, use that value instead. The log should show the current task, completed steps, warnings, failures, and any dependency-driven extra changes.
+
+7. Run the generated verification script after the setup agent says installation is complete. The default path is usually:
+
+   ```sh
+   mac-bootstrap/scripts/bootstrap-check.sh
+   ```
+
+   If the script is not executable yet, run:
+
+   ```sh
+   chmod +x mac-bootstrap/scripts/*.sh
+   mac-bootstrap/scripts/bootstrap-check.sh
+   ```
+
+   The check should report `PASS`, `WARN`, or `FAIL` lines for expected apps, commands, files, package managers, editor extensions, models, repos, services, containers, VMs, and private-transfer placeholders.
+
+8. Generate and open the final report. The default command is usually:
+
+   ```sh
+   mac-bootstrap/scripts/generate-bootstrap-report.sh
+   open mac-bootstrap/reports/bootstrap-report-*.html
+   ```
+
+   Review the report for:
+
+   - failed installs or missing commands
+   - fallback methods the setup agent used
+   - missing private files that were not included in git
+   - apps that still need manual login or licensing
+   - SSH/GPG/password-manager steps still requiring manual action
+   - skipped large state such as model weights, VM disks, container volumes, browser profiles, app caches, Photos/Music libraries, or cloud credentials
+   - additional changes made during setup because a dependency was missing
 
 ## Discovery
 

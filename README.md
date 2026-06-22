@@ -59,22 +59,6 @@ Example planning-only prompt:
 Use the mac-setup-bundle-builder skill to inspect this Mac and tell me what setup bundle files you would create. Do not write files yet.
 ```
 
-Example with explicit output paths:
-
-```text
-Use the mac-setup-bundle-builder skill and create a self-contained setup bundle in ./mac-bootstrap.
-
-Put the machine-readable setup files in ./mac-bootstrap. This should include PROMPT.md, manifest.yaml, setup-order.md, package manager inventories, app/settings docs, dotfiles, editor extension inventories, VM/container inventories, private transfer placeholders, live-progress report paths, verification expectations, and recommendations.
-
-Put executable helper scripts in ./mac-bootstrap/scripts. This should include setup/check/report scripts such as bootstrap-progress.sh, bootstrap-check.sh, generate-bootstrap-report.sh, restore-app-settings.sh, setup-editor-tooling.sh, setup-local-tools.sh, and any tool-specific install/restore scripts discovered from this machine.
-```
-
-This self-contained layout is the recommended default because users can move one folder to the new Mac. If you prefer repo-root scripts for an existing repository, ask for that explicitly:
-
-```text
-Use the mac-setup-bundle-builder skill and create the setup bundle in ./mac-bootstrap. Put helper scripts in ./scripts and make every generated path match that layout.
-```
-
 If your agent does not automatically detect the skill, name it explicitly:
 
 ```text

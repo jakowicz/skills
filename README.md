@@ -62,17 +62,17 @@ Use the mac-setup-bundle-builder skill to inspect this Mac and tell me what setu
 Example with explicit output paths:
 
 ```text
-Use the mac-setup-bundle-builder skill and create the bundle in ./mac-bootstrap with helper scripts in ./scripts.
+Use the mac-setup-bundle-builder skill and create a self-contained setup bundle in ./mac-bootstrap.
 
-Put the machine-readable setup bundle in ./mac-bootstrap. This should include PROMPT.md, manifest.yaml, setup-order.md, package manager inventories, app/settings docs, dotfiles, editor extension inventories, VM/container inventories, private transfer placeholders, live-progress report paths, verification expectations, and recommendations.
+Put the machine-readable setup files in ./mac-bootstrap. This should include PROMPT.md, manifest.yaml, setup-order.md, package manager inventories, app/settings docs, dotfiles, editor extension inventories, VM/container inventories, private transfer placeholders, live-progress report paths, verification expectations, and recommendations.
 
-Put executable helper scripts in ./scripts. This should include setup/check/report scripts such as bootstrap-progress.sh, bootstrap-check.sh, generate-bootstrap-report.sh, restore-app-settings.sh, setup-editor-tooling.sh, setup-local-tools.sh, and any tool-specific install/restore scripts discovered from this machine.
+Put executable helper scripts in ./mac-bootstrap/scripts. This should include setup/check/report scripts such as bootstrap-progress.sh, bootstrap-check.sh, generate-bootstrap-report.sh, restore-app-settings.sh, setup-editor-tooling.sh, setup-local-tools.sh, and any tool-specific install/restore scripts discovered from this machine.
 ```
 
-The two-directory layout is a convention, not a requirement. `./mac-bootstrap` keeps the declarative bundle files together, while `./scripts` keeps executable automation beside the bundle at the repo root. This makes commands such as `scripts/bootstrap-check.sh` easy to run from the copied repository root. If you prefer a single self-contained folder, ask the agent to put helper scripts inside the bundle instead:
+This self-contained layout is the recommended default because users can move one folder to the new Mac. If you prefer repo-root scripts for an existing repository, ask for that explicitly:
 
 ```text
-Use the mac-setup-bundle-builder skill and create a self-contained bundle in ./mac-bootstrap. Put helper scripts in ./mac-bootstrap/scripts and make every generated path match that layout.
+Use the mac-setup-bundle-builder skill and create the setup bundle in ./mac-bootstrap. Put helper scripts in ./scripts and make every generated path match that layout.
 ```
 
 If your agent does not automatically detect the skill, name it explicitly:
@@ -92,10 +92,10 @@ Common transfer options:
 git clone git@github.com:your-user/your-setup-bundle.git
 
 # For a private local transfer, archive the repo.
-tar -czf mac-setup-bundle.tgz ./mac-bootstrap ./scripts
+tar -czf mac-setup-bundle.tgz ./mac-bootstrap
 
 # Copy directly over SSH.
-rsync -av ./mac-bootstrap ./scripts user@new-mac.local:~/setup-bundle/
+rsync -av ./mac-bootstrap user@new-mac.local:~/setup-bundle/
 
 # Or copy with AirDrop, an encrypted external drive, or a private cloud folder.
 ```
@@ -121,7 +121,7 @@ On the new Mac:
 
 1. Copy or clone the generated bundle.
 2. Copy any reviewed private files separately if the setup requires them.
-3. Open your AI coding agent with the copied repository as the workspace. For example, open the folder that contains `mac-bootstrap/` and `scripts/`.
+3. Open your AI coding agent with the copied bundle or containing repository as the workspace. For example, open the folder that contains `mac-bootstrap/`.
 4. Open the generated `mac-bootstrap/PROMPT.md`.
 5. Copy the full contents of `PROMPT.md` and paste it as the first message to the AI setup agent. If your agent supports file references, you can instead send a short message such as:
 

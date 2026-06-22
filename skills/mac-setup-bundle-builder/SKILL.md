@@ -19,7 +19,7 @@ Use `assets/templates/` as starting points. Those templates are part of this ski
 
 ## Workflow
 
-1. Choose a bundle root and a generated-script root in the user's repo. Ask if the user wants specific names; otherwise use neutral names that fit their repo and carry those names consistently through every generated file.
+1. Choose a bundle root in the user's repo. By default, make the generated bundle self-contained and put helper scripts in `<bundle_dir>/scripts/`. Ask only if the user wants a different layout, such as repo-root scripts.
 2. Inventory the current Mac with non-destructive commands and app metadata. Do not assume any shell, package manager, container engine, virtualization tool, language manager, editor, AI tool, or service exists until discovery confirms it.
 3. Ask for clarification only when an assumption would be risky: target Mac architecture, private data handling, VM provider choice, or whether to include large state.
 4. Generate the manifest, setup prompt, setup order, package-manager files, dotfiles, editor/IDE extension inventories, docs, and scripts.
@@ -59,21 +59,21 @@ Generate these unless the user explicitly narrows scope:
   dotfiles/
   private/
   reports/
-<script_dir>/
-  bootstrap-progress.sh
-  bootstrap-check.sh
-  generate-bootstrap-report.sh
-  update-setup-inventory.sh
-  apply-macos-defaults.sh
-  restore-app-settings.sh
-  restore-finder-favorites.sh
-  restore-container-images.sh or engine-specific equivalent
-  setup-vm-labs.sh or provider-specific equivalent
-  setup-editor-tooling.sh or editor/IDE-specific equivalent
-  setup-local-tools.sh or category-specific equivalents
-  setup-launchers.sh
-  start-local-tool.sh
-  stop-local-tool.sh
+  scripts/
+    bootstrap-progress.sh
+    bootstrap-check.sh
+    generate-bootstrap-report.sh
+    update-setup-inventory.sh
+    apply-macos-defaults.sh
+    restore-app-settings.sh
+    restore-finder-favorites.sh
+    restore-container-images.sh or engine-specific equivalent
+    setup-vm-labs.sh or provider-specific equivalent
+    setup-editor-tooling.sh or editor/IDE-specific equivalent
+    setup-local-tools.sh or category-specific equivalents
+    setup-launchers.sh
+    start-local-tool.sh
+    stop-local-tool.sh
 ```
 
 Adjust names and paths to the user's repo. If a feature is not relevant, omit it and explain why.
@@ -107,7 +107,7 @@ Before finishing, run the relevant checks:
 
 ```sh
 bundle_dir="${BUNDLE_DIR:?Set BUNDLE_DIR to the generated bundle directory before validating}"
-script_dir="${SCRIPT_DIR:?Set SCRIPT_DIR to the generated script directory before validating}"
+script_dir="${SCRIPT_DIR:-$bundle_dir/scripts}"
 for f in "$script_dir"/*.sh; do [ -e "$f" ] || continue; bash -n "$f" || exit 1; done
 find "$bundle_dir/dotfiles" -type f -name '*.zsh' -exec zsh -n {} \; 2>/dev/null || true
 find "$bundle_dir/dotfiles" -type f -name '*.bash' -exec bash -n {} \; 2>/dev/null || true

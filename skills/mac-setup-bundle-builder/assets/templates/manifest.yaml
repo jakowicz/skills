@@ -30,13 +30,13 @@ system_files:
   app_settings: {}
   finder_favorites: {}
   live_progress:
-    script: <script_dir>/bootstrap-progress.sh
+    script: <bundle_dir>/scripts/bootstrap-progress.sh
     live_log: <bundle_dir>/reports/live-bootstrap-status.log
     additional_changes_log: <bundle_dir>/reports/additional-changes.log
   verification:
-    script: <script_dir>/bootstrap-check.sh
+    script: <bundle_dir>/scripts/bootstrap-check.sh
   html_report:
-    script: <script_dir>/generate-bootstrap-report.sh
+    script: <bundle_dir>/scripts/generate-bootstrap-report.sh
 
 apps:
   install_with_package_managers: []

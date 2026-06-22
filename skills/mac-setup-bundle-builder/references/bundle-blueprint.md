@@ -12,6 +12,8 @@ This reference defines the generated bundle, not this skill's own folder. All pa
 
 Package-manager files: Generate whatever the user's system needs. Examples include a Homebrew `Brewfile`, Nix flake/config, MacPorts list, app-store CLI list, language package manifests, or tool-specific export files. Prefer current stable packages unless the manifest documents a pin or legacy requirement.
 
+Helper scripts: Put generated executable setup/check/report scripts in `<bundle_dir>/scripts/` by default so the bundle can be copied as one self-contained directory. Use a separate repo-root script directory only if the user asks for that layout, and then update every manifest, prompt, setup-order, and report path consistently.
+
 `RECOMMENDATIONS.md`: Gaps and future improvements: secrets checklist, app settings missed, backup requirements, manual login/licensing, large data that should not live in git.
 
 `unclassified-configs.md`: Best-effort inventory for discovered config/state that does not fit a known restore flow. Include paths, owner app/tool, privacy risk, whether copied privately or only documented, and suggested restore/check steps.
